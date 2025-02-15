@@ -31,7 +31,8 @@ class OrderFactory extends Factory
             $products = Product::inRandomOrder()->take(rand(1, 10))->get();
 
             foreach ($products as $product) {
-                $order->products()->attach($product->id);
+                $quantity = random_int(1, 5);
+                $order->products()->attach($product->id, ['quantity' => $quantity]);
             }
 
             $order->updateTotalPrice();

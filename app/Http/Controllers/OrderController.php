@@ -27,13 +27,8 @@ class OrderController extends Controller
         return response()->json($products);
     }
 
-    public function getOrders(Request $request)
+    public function getOrders()
     {
-        $page = $request->input('page',1);
-        $limit = $request->input('limit',5);
-
-        $orders = Order::paginate($limit, ['customer_name', 'total_price'], 'page', $page);
-
-        return response()->json($orders);
+        return response()->json(Order::all());
     }
 }

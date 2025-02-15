@@ -11,13 +11,13 @@ class Order extends Model
     
     public function products() 
     {
-        return $this->belongsToMany(Product::class, 'order_product');
+        return $this->belongsToMany(Product::class, 'order_product')->withPivot('quantity');
     }
 
     public function updateTotalPrice()
     {
         $totalPrice = $this->products->sum(function ($product) {
-            return $product->price;
+            return $product->price * $product->pivot->quantity;
         });
 
         $this->update(['total_price' => $totalPrice]);
